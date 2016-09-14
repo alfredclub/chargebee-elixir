@@ -1,7 +1,7 @@
-defmodule Chargebee.Addon do
+defmodule Chargebee.Address do
   import Chargebee.API
   @derive [Poison.Encoder]
-  @chargebee_url "/addons"
+  @chargebee_url "/addresses"
 
   defstruct [ :id,
               :name,
@@ -23,24 +23,11 @@ defmodule Chargebee.Addon do
               :meta_data
             ]
 
-  def create(addon) do
-    post(@chargebee_url, addon) |> handle_response
+  def update(address) do
+    post(@chargebee_url, address) |> handle_response
   end
 
-  def update(addon) do
-    post("#{@chargebee_url}/#{addon.id}", addon) |> handle_response
+  def retrieve(subscription_id, label) do
+    get(@chargebee_url, %{subscription_id: subscription_id, label: label}) |> handle_response
   end
-
-  def delete(id) do
-    post("#{@chargebee_url}/#{id}/delete", %{}) |> handle_response
-  end
-
-  def retrieve(id) do
-    get("#{@chargebee_url}/#{id}", %{}) |> handle_response
-  end
-
-  def list(params \\ %{}) do
-    get(@chargebee_url, params) |> handle_list_response
-  end
-
 end

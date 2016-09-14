@@ -12,5 +12,4 @@ defmodule Chargebee.Params do
   defp encode_key_value_pair(_key, nil), do: nil
   defp encode_key_value_pair(key, value), do: "#{key}=#{value}"
 
-
 end

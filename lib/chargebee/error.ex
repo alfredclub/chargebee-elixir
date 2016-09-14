@@ -4,12 +4,12 @@ defmodule Chargebee.Error do
             reason: nil,
             meta_data: %{}
 
-  def from_server_response(%HTTPoison.Response{body: body, status_code: status_code}) do
+  def from_server_response(%{body: body, status_code: status_code}) do
     map_body = Poison.decode!(body)
     from_error_body(map_body, status_code)
   end
 
-  def from_server_response(%HTTPoison.Error{id: id, reason: reason} = error) do
+  def from_server_response(%{reason: reason} = error) do
     struct(__MODULE__, %{reason: reason,
                          meta_data: error})
   end
@@ -24,4 +24,5 @@ defmodule Chargebee.Error do
     struct(__MODULE__, %{status_code: status_code,
                          meta_data: body})
   end
+  
 end

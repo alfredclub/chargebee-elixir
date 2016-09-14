@@ -1,5 +1,7 @@
 defmodule Chargebee.Plan do
+  import Chargebee.API
   @derive [Poison.Encoder]
+  @chargebee_url "/plans"
 
   defstruct [ :id,
               :name,
@@ -26,43 +28,23 @@ defmodule Chargebee.Plan do
               :meta_data
             ]
 
-    def create(plan) do
-      Chargebee.Request.post('/plans', plan) |> handle_response
-    end
+  def create(plan) do
+    post(@chargebee_url, plan) |> handle_response
+  end
 
-    def update(plan) do
-      Chargebee.Request.post("/plans/#{plan.id}", plan) |> handle_response
-    end
+  def update(plan) do
+    post("#{@chargebee_url}/#{plan.id}", plan) |> handle_response
+  end
 
-    def delete(id) do
-      Chargebee.Request.post("/plans/#{id}/delete", %{}) |> handle_response
-    end
+  def delete(id) do
+    post("#{@chargebee_url}/#{id}/delete", %{}) |> handle_response
+  end
 
-    def get(id) do
-      Chargebee.Request.post("/plans/#{id}", %{}) |> handle_response
-    end
+  def retrieve(id) do
+    get("#{@chargebee_url}/#{id}", %{}) |> handle_response
+  end
 
-    def list(params \\ %{}) do
-      Chargebee.Request.get("/plans", params) |> handle_list_response
-    end
-
-    defp handle_response({:ok, %HTTPoison.Response{body: body, status_code: 200}}) do
-      %{"plan" => plan} = Poison.decode!(body, as: %{"plan" => %__MODULE__{}})
-      {:ok, plan}
-    end
-
-    defp handle_response({_, non_200_response}) do
-      {:error, Chargebee.Error.from_server_response(non_200_response)}
-    end
-
-    defp handle_list_response({:ok, %HTTPoison.Response{body: body, status_code: 200}}) do
-      %{"list" => lists} = Poison.decode!(body, as: %{"list" => [%{"plan" => %__MODULE__{}}]})
-      json = Poison.Parser.parse!(body, keys: :atoms!)
-      {:ok, Enum.map(lists, &(&1["plan"])), json[:next_offset]}
-    end
-
-    defp handle_list_response({_, non_200_response}) do
-      {:error, Chargebee.Error.from_server_response(non_200_response)}
-    end
-
+  def list(params \\ %{}) do
+    get(@chargebee_url, params) |> handle_list_response
+  end
 end
