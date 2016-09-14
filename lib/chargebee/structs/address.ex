@@ -3,24 +3,22 @@ defmodule Chargebee.Address do
   @derive [Poison.Encoder]
   @chargebee_url "/addresses"
 
-  defstruct [ :id,
-              :name,
-              :invoice_name,
-              :description,
-              :type,
-              :charge_type,
-              :price,
-              :currency_code,
-              :period,
-              :period_unit,
-              :unit,
-              :status,
-              :archived_at,
-              :enabled_in_portal,
-              :tax_code,
-              :invoice_notes,
-              :taxable,
-              :meta_data
+  defstruct [ :subscription_id,
+              :label,
+              :first_name,
+              :last_name,
+              :email,
+              :company,
+              :phone,
+              :addr,
+              :extended_addr,
+              :extended_addr2,
+              :city,
+              :state_code,
+              :state,
+              :country,
+              :zip,
+              :validation_status
             ]
 
   def update(address) do

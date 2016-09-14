@@ -23,7 +23,7 @@ defmodule Chargebee.Card do
               :ip_address,
               :masked_number
             ]
-            
+
   def retrieve(customer_id) do
     get("#{@chargebee_url}/#{customer_id}", %{}) |> handle_response
   end
