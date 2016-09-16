@@ -1,8 +1,10 @@
 defmodule Chargebee.API do
   import Chargebee.Utils
 
-  defdelegate post(url, data), to: Application.get_env(:chargebee, :api_impl)
-  defdelegate get(url, data), to: Application.get_env(:chargebee, :api_impl)
+  @client Application.get_env(:chargebee, :api_impl, Chargebee.Request)
+
+  defdelegate post(url, data), to: @client
+  defdelegate get(url, data), to: @client
 
   def handle_response({:ok, %{body: json, status_code: 200}}) do
     output =

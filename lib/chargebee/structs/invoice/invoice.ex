@@ -1,5 +1,4 @@
 defmodule Chargebee.Invoice do
-  import Chargebee.API
   @derive [Poison.Encoder]
   @chargebee_url "/invoices"
 
@@ -41,6 +40,4 @@ defmodule Chargebee.Invoice do
           ]
 
   #TODO implement API
-  
-
 end
