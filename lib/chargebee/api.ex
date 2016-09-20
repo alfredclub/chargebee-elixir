@@ -1,10 +1,8 @@
 defmodule Chargebee.API do
   import Chargebee.Utils
 
-  @client Application.get_env(:chargebee, :api_impl, Chargebee.Request)
-
-  defdelegate post(url, data), to: @client
-  defdelegate get(url, data), to: @client
+  defdelegate post(url, data), to: client
+  defdelegate get(url, data), to: client
 
   def handle_response({:ok, %{body: json, status_code: 200}}) do
     output =
@@ -71,4 +69,5 @@ defmodule Chargebee.API do
   defp extract_single(map) when map_size(map) == 1, do: Map.values(map) |> List.first
   defp extract_single(map), do: map
 
+  defp client, do: Application.get_env(:chargebee, :api_impl, Chargebee.Request)
 end
