@@ -7,6 +7,10 @@ defmodule Chargebee.Config do
     Application.get_env(:chargebee, :api_key, System.get_env("CHARGEBEE_API_KEY")) |> check_value
   end
 
+  def api_impl do
+    Application.get_env(:chargebee, :api_impl, Chargebee.Request)
+  end
+
   defp check_value(nil) do
     raise ArgumentError, message: "Invalid config value given"
   end
