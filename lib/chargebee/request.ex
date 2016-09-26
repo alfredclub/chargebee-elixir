@@ -69,6 +69,7 @@ defmodule Chargebee.Request do
       {key, parsed_map}
     end
   end
+
   defp parse_body(key, value) when is_list(value) do
     if String.ends_with?(Atom.to_string(key), "_ids") do
       {key, value}
@@ -86,6 +87,7 @@ defmodule Chargebee.Request do
       end
     end
   end
+
   defp parse_body(key, value), do: {key, value}
 
   defp options_with_auth(options) do
