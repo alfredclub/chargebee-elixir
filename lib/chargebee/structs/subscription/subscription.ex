@@ -34,7 +34,8 @@ defmodule Chargebee.Subscription do
               :billing_address,
               :shipping_address,
               :invoice_notes,
-              :meta_data
+              :meta_data,
+              :replace_addon_list
             ]
 
     def create(subscription, customer \\ %{}, card \\ %{}, payment_method \\ %{}) do
