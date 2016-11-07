@@ -31,11 +31,13 @@ defmodule Chargebee.Subscription do
               :addons,
               :coupon,
               :coupons,
+              :coupon_ids,
               :billing_address,
               :shipping_address,
               :invoice_notes,
               :meta_data,
-              :replace_addon_list
+              :replace_addon_list,
+              :replace_coupon_list
             ]
 
     def create(subscription, customer \\ %{}, card \\ %{}, payment_method \\ %{}) do
