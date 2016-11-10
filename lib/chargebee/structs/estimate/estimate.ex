@@ -10,27 +10,11 @@ defmodule Chargebee.Estimate do
               :credit_note_estimates
             ]
 
-  def create_subscription(subscription, billing_address \\ %{}, shipping_address \\ %{}, customer \\ %{}, addons \\ []) do
-    params =
-      Map.new
-      |> Map.put(:subscription, subscription)
-      |> Map.put(:billing_address, billing_address)
-      |> Map.put(:shipping_address, shipping_address)
-      |> Map.put(:customer, customer)
-      |> Map.put(:addons, addons)
-
+  def create_subscription(params \\ %{}) do
     post("#{@chargebee_url}/create_subscription", params) |> handle_response
   end
 
-  def update_subscription(subscription, billing_address \\ %{}, shipping_address \\ %{}, customer \\ %{}, addons \\ [], other_params \\ %{}) do
-    params =
-      other_params
-      |> Map.put(:subscription, subscription)
-      |> Map.put(:billing_address, billing_address)
-      |> Map.put(:shipping_address, shipping_address)
-      |> Map.put(:customer, customer)
-      |> Map.put(:addons, addons)
-
+  def update_subscription(params \\ %{}) do
     post("#{@chargebee_url}/update_subscription", params) |> handle_response
   end
 
