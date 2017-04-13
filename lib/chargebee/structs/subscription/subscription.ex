@@ -58,6 +58,10 @@ defmodule Chargebee.Subscription do
       get(@chargebee_url, params) |> handle_list_response
     end
 
+    def list_for_customer(customer_id, params \\ %{}) do
+      get("/customers/#{customer_id}/subscriptions", params) |> handle_list_response
+    end
+
     def update(subscription, customer \\ %{}, card \\ %{}, payment_method \\ %{}) do
       params =
         Map.from_struct(subscription)
@@ -66,7 +70,6 @@ defmodule Chargebee.Subscription do
         |> Map.put(:payment_method, payment_method)
       post("#{@chargebee_url}/#{subscription.id}", params) |> handle_response
     end
-
 
     def retrieve(id) do
       get("#{@chargebee_url}/#{id}", %{}) |> handle_response
